@@ -9,6 +9,11 @@ def top():
     return 'Top here'
 
 
+@app.get('/echo/{thing}')
+def echo(thing):
+    return f'printing: {thing}'
+
+
 if __name__ == '__main__':
     import uvicorn
 
