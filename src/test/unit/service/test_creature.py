@@ -4,6 +4,7 @@ from service import creature as code
 
 sample = Creature(
     name='Yeti',
+    country='CN',
     area='Himalayas',
     description='Hirsute Himalayan',
     aka='Abominable Snowman',
