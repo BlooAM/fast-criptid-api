@@ -2,6 +2,9 @@ import os
 from pathlib import Path
 from sqlite3 import connect, Connection, Cursor, IntegrityError
 
+from dotenv import load_dotenv
+
+load_dotenv()
 conn: Connection | None = None
 curs: Cursor | None = None
 
