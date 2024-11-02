@@ -17,8 +17,8 @@ def row_to_model(row: tuple) -> Creature:
     return Creature(name, description, country, area, aka)
 
 
-def model_to_dict(creature: Creature) -> dict:
-    return creature.dict()
+def model_to_dict(creature: Creature) -> dict | None:
+    return creature.dict() if creature else None
 
 
 def get_one(name: str) -> Creature:
@@ -51,6 +51,7 @@ def modify(creature: Creature) -> Creature:
         update creature
         set country=:country,
             name=:name,
+            description=:description,
             area=:area,
             aka=:aka
         where name=:name_orig
