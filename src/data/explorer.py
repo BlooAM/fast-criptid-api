@@ -12,7 +12,7 @@ curs.execute("""
 
 def row_to_model(row: tuple) -> Explorer:
     name, country, description = row
-    return Explorer(name, country, description)
+    return Explorer(name=name, country=country, description=description)
 
 
 def model_to_dict(explorer: Explorer) -> dict | None:
