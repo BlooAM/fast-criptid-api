@@ -1,5 +1,6 @@
-from .init import curs
+from .init import curs, IntegrityError
 from model.explorer import Explorer
+from errors import Missing, Duplicate
 
 curs.execute("""
     create table if not exists explorer(
@@ -24,7 +25,10 @@ def get_one(name: str) -> Explorer:
     params = {'name': name}
     curs.execute(query, params)
     row = curs.fetchone()
-    return row_to_model(row)
+    if row:
+        return row_to_model(row)
+    else:
+        raise Missing(msg=f'Explorer {name} not found')
 
 
 def get_all() -> list[Explorer]:
@@ -35,16 +39,25 @@ def get_all() -> list[Explorer]:
 
 
 def create(explorer: Explorer) -> Explorer:
+    if not explorer:
+        return None
+
     query = """
         insert into explorer (name, country, description) 
         values (:name, :country, :description)
     """
     params = model_to_dict(explorer)
-    curs.execute(query, params)
+    try:
+        curs.execute(query, params)
+    except IntegrityError:
+        raise Duplicate(msg=f'Explorer {explorer.name} already exists')
     return get_one(explorer.name)
 
 
-def modify(explorer: Explorer) -> Explorer:
+def modify(name: str, explorer: Explorer) -> Explorer:
+    if not (name and explorer):
+        return None
+
     query = """
         update explorer
         set country=:country,
@@ -54,12 +67,19 @@ def modify(explorer: Explorer) -> Explorer:
     """
     params = model_to_dict(explorer)
     params["name_orig"] = explorer.name
-    _ = curs.execute(query, params)
-    return get_one(explorer.name)
+    curs.execute(query, params)
+    if curs.rowcount == 1:
+        return get_one(explorer.name)
+    else:
+        raise Missing(msg=f'Explorer {name} not found')
 
 
-def delete(explorer: Explorer) -> bool:
+def delete(name: str) -> bool:
+    if not name:
+        return None
+
     query = 'delete from explorer where name=:name'
-    params = {'name': explorer.name}
-    res = curs.execute(query, params)
-    return bool(res)
+    params = {'name': name}
+    curs.execute(query, params)
+    if curs.rowcount != 1:
+        raise Missing(msg=f'Explorer {name} not found')
