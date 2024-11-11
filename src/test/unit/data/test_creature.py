@@ -55,3 +55,13 @@ def test_modify_missing():
     )
     with pytest.raises(Missing):
         _ = creature.modify(bob.name, bob)
+
+
+def test_delete(sample):
+    resp = creature.delete(sample.name)
+    assert resp is None
+
+
+def test_delete_missing(sample):
+    with pytest.raises(Missing):
+        _ = creature.delete(sample.name)
