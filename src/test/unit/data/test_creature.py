@@ -17,3 +17,13 @@ def sample() -> Creature:
         country="CN",
         area="Himalayas",
     )
+
+
+def test_create(sample):
+    resp = creature.sample(sample)
+    assert resp == sample
+
+
+def test_create_duplicate(sample):
+    with pytest.raises(Duplicate):
+        _ = creature.create(sample)
