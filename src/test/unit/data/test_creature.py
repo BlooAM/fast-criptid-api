@@ -37,3 +37,21 @@ def test_get_exists(sample):
 def test_get_missing():
     with pytest.raises(Missing):
         _ = creature.get_one("nonexisting")
+
+
+def test_modify(sample):
+    sample.country = "GL"
+    resp = creature.modify(sample.name, sample)
+    assert resp == sample
+
+
+def test_modify_missing():
+    bob: Creature = Creature(
+        name="bob",
+        description="some guy",
+        country="ZZ",
+        area="nowhere",
+        aka="nobody",
+    )
+    with pytest.raises(Missing):
+        _ = creature.modify(bob.name, bob)
