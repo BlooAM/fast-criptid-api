@@ -4,17 +4,17 @@ from errors import Missing, Duplicate
 
 curs.execute("""
     create table if not exists creature(
-    name text primary key, 
+    name text primary key,
+    description text,
+    area text,  
     country text, 
-    description text, 
-    area text, 
     aka text
     )
 """)
 
 
 def row_to_model(row: tuple) -> Creature:
-    name, country, description, area, aka = row
+    name, description, country, area, aka = row
     return Creature(name=name, country=country, description=description, area=area, aka=aka)
 
 
@@ -64,8 +64,8 @@ def modify(name: str, creature: Creature) -> Creature:
         update creature
         set name=:name,
             country=:country,
-            description=:description
-            area=:area
+            description=:description,
+            area=:area,
             aka=:ala
         where name=:name_orig
     """
