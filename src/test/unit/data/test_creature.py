@@ -13,14 +13,14 @@ def sample() -> Creature:
     return Creature(
         name="yeti",
         description="Hirsute Himalayan",
-        aka="Abominable Snowman",
         country="CN",
         area="Himalayas",
+        aka="Abominable Snowman",
     )
 
 
 def test_create(sample):
-    resp = creature.sample(sample)
+    resp = creature.create(sample)
     assert resp == sample
 
 
