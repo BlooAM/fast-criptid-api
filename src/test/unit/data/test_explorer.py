@@ -18,7 +18,7 @@ def sample() -> Explorer:
 
 
 def test_create(sample):
-    resp = explorer.sample(sample)
+    resp = explorer.create(sample)
     assert resp == sample
 
 
