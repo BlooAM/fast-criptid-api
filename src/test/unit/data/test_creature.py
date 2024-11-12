@@ -12,8 +12,8 @@ from data import creature
 def sample() -> Creature:
     return Creature(
         name="yeti",
-        description="Hirsute Himalayan",
         country="CN",
+        description="Hirsute Himalayan",
         area="Himalayas",
         aka="Abominable Snowman",
     )
