@@ -5,8 +5,8 @@ from errors import Missing, Duplicate
 curs.execute("""
     create table if not exists creature(
     name text primary key, 
-    description text, 
     country text, 
+    description text, 
     area text, 
     aka text
     )
@@ -14,8 +14,8 @@ curs.execute("""
 
 
 def row_to_model(row: tuple) -> Creature:
-    name, country, area, description, aka = row
-    return Creature(name=name, country=country, area=area, description=description, aka=aka)
+    name, country, description, area, aka = row
+    return Creature(name=name, country=country, description=description, area=area, aka=aka)
 
 
 def model_to_dict(creature: Creature) -> dict | None:
@@ -62,8 +62,8 @@ def modify(name: str, creature: Creature) -> Creature:
 
     query = """
         update creature
-        set country=:country,
-            name=:name,
+        set name=:name,
+            country=:country,
             description=:description
             area=:area
             aka=:ala
