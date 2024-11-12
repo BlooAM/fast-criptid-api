@@ -66,7 +66,7 @@ def modify(name: str, creature: Creature) -> Creature:
             country=:country,
             description=:description,
             area=:area,
-            aka=:ala
+            aka=:aka
         where name=:name_orig
     """
     params = model_to_dict(creature)
