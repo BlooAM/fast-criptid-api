@@ -62,3 +62,23 @@ def create_access_token(data: dict, expires: timedelta | None = None):
         expires = timedelta(minutes=15)
     src.update({'exp': now + expires})
     encoded_jwt = jwt.encode(src, SECRET_KEY, algorithm=ALGORITHM)
+
+
+def get_all() -> list[User]:
+    return data.get_all()
+
+
+def get_one(name) -> User:
+    return data.get_one(name)
+
+
+def create(user: User) -> User:
+    return data.create(user)
+
+
+def modify(name: str, user: User) -> User:
+    return data.modify(name, user)
+
+
+def delete(name: str) -> None:
+    return data.delete(name)
