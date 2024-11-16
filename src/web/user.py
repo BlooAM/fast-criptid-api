@@ -25,6 +25,18 @@ def unauthed():
     )
 
 
-@router.post
+@router.post('/token')
 async def create_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = service.auth_user(form_data.username, form_data.password)
+    if not user:
+        unauthed()
+    expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = service.create_access_token(data={'sub': user.username}, expires=expires)
+    return {'access_token': access_token, 'token_type': 'bearer'}
+
+
+@router.get('/token')
+def get_access_token(token: str = Depends(oauth2_dep)) -> dict:
+    return {'token': token}
+
+
