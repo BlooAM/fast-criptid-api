@@ -30,3 +30,35 @@ def get_jwt_username(token: str) -> str | None:
     except jwt.JWTError:
         return None
     return username
+
+
+def lookup_user(username: str) -> User | None:
+    if (user := data.get(username)):
+        return user
+    return None
+
+
+def get_current_user(token: str) -> User | None:
+    username = get_jwt_username(token)
+    if not username:
+        return None
+    if (user := lookup_user(username)):
+        return user
+    return None
+
+
+def auth_user(name: str, plain: str) -> User | None:
+    if not (user := lookup_user(name)):
+        return None
+    if not verify_password((plain, user.hash)):
+        return None
+    return user
+
+
+def create_access_token(data: dict, expires: timedelta | None = None):
+    src = data.copy()
+    now = datetime.utcnow()
+    if not expires:
+        expires = timedelta(minutes=15)
+    src.update({'exp': now + expires})
+    encoded_jwt = jwt.encode(src, SECRET_KEY, algorithm=ALGORITHM)
