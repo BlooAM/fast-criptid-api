@@ -11,7 +11,7 @@ else:
 
 SECRET_KEY = 'keep-it-secret-keep-it-safe'
 ALGORITHM = 'HS256'
-pwd_context = CryptContext(schemes=['bscrypt'], deprecated='auto')
+pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
 def verify_password(plain: str, hash: str) -> bool:
