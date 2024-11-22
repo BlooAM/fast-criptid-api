@@ -78,7 +78,7 @@ def modify(name: str, creature: Creature) -> Creature:
         raise Missing(msg=f'Creature {name} not found')
 
 
-def delete(name: str) -> bool:
+def delete(name: str) -> None:
     if not name:
         return None
 

@@ -31,7 +31,6 @@ def modify(name: str, creature: Creature) -> Creature:
     return creature
 
 
-def delete(name: str) -> bool:
+def delete(name: str) -> None:
     if name not in [creature.name for creature in _creatures]:
         raise Missing(msg=f'Creature {name} not found')
-    return True
