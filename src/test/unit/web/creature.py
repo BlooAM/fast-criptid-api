@@ -31,3 +31,23 @@ def assert_duplicate(exc):
 def assert_missing(exc):
     assert exc.value.status_code == 404
     assert 'already exists' in exc.value.msg
+
+
+def test_create(sample):
+    assert creature.create(sample) == sample
+
+
+def test_create_duplicate(fakes):
+    with pytest.raises(HTTPException) as e:
+        _ = creature.create(fakes[0])
+        assert_duplicate(e)
+
+
+def test_get_one(fakes):
+    assert creature.get_one(fakes[0].name) == fakes[0]
+
+
+def test_get_one_missing():
+    with pytest.raises(HTTPException) as e:
+        _ = creature.get_one('bobcat')
+        assert_missing(e)
