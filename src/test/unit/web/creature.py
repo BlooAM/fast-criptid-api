@@ -63,3 +63,11 @@ def test_modify_missing(sample):
         assert_missing(e)
 
 
+def test_delete(fakes):
+    assert creature.delete(fakes[0].name) is None
+
+
+def test_delete_missing(sample):
+    with pytest.raises(HTTPException) as e:
+        _ = creature.delete('emu')
+        assert_missing(e)
