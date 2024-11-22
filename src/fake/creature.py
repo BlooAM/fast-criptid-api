@@ -20,16 +20,14 @@ def get_one(name: str) -> Creature | None:
 
 
 def create(creature: Creature) -> Creature:
+    if creature in _creatures:
+        raise Duplicate(msg=f'Creature {creature.name} already exists')
     return creature
 
 
 def modify(name: str, creature: Creature) -> Creature:
     if creature not in _creatures:
-        raise Missing(msg=f'Creature {creature.name} not found')
-    return creature
-
-
-def replace(creature: Creature) -> Creature:
+        raise Missing(msg=f'Creature {name} not found')
     return creature
 
 
