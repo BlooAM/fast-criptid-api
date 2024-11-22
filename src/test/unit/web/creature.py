@@ -51,3 +51,15 @@ def test_get_one_missing():
     with pytest.raises(HTTPException) as e:
         _ = creature.get_one('bobcat')
         assert_missing(e)
+
+
+def test_modify(fakes):
+    assert creature.modify(fakes[0].name, fakes[0]) == fakes[0]
+
+
+def test_modify_missing(sample):
+    with pytest.raises(HTTPException) as e:
+        _ = creature.modify(sample.name, sample)
+        assert_missing(e)
+
+
