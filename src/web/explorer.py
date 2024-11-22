@@ -35,9 +35,9 @@ def create(explorer: Explorer) -> Explorer:
 
 
 @router.patch('/')
-def modify(explorer: Explorer) -> Explorer:
+def modify(name: str, explorer: Explorer) -> Explorer:
     try:
-        return service.modify(explorer)
+        return service.modify(name, explorer)
     except Missing as e:
         raise HTTPException(status_code=404, detail=e.msg)
 
