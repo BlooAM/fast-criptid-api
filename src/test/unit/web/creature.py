@@ -24,6 +24,7 @@ def fakes() -> list[Creature]:
 
 
 def assert_duplicate(exc):
+    print(exc)
     assert exc.value.status_code == 409
     assert 'not found' in exc.value.msg
 

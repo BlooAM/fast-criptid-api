@@ -1,4 +1,5 @@
 from model.creature import Creature
+from errors import Missing, Duplicate
 
 
 _creatures = [
@@ -15,14 +16,16 @@ def get_one(name: str) -> Creature | None:
     for _creature in _creatures:
         if _creature.name == name:
             return _creature
-    return None
+    raise Missing(msg=f'Creature {name} not found')
 
 
 def create(creature: Creature) -> Creature:
     return creature
 
 
-def modify(creature: Creature) -> Creature:
+def modify(name: str, creature: Creature) -> Creature:
+    if creature not in _creatures:
+        raise Missing(msg=f'Creature {creature.name} not found')
     return creature
 
 
@@ -31,4 +34,6 @@ def replace(creature: Creature) -> Creature:
 
 
 def delete(name: str) -> bool:
-    return None
+    if name not in [creature.name for creature in _creatures]:
+        raise Missing(msg=f'Creature {name} not found')
+    return True
