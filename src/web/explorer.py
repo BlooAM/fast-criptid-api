@@ -1,14 +1,18 @@
+import os
+
 from fastapi import APIRouter, HTTPException
 
 from model.explorer import Explorer
-import service.explorer as service
+if os.getenv('CRYPTID_UNIT_TEST'):
+    from fake import explorer as service
+else:
+    from service import explorer as service
 from errors import Missing, Duplicate
 
 
 router = APIRouter(prefix='/explorer')
 
 
-@router.get('')
 @router.get('/')
 def get_all() -> list[Explorer]:
     return service.get_all()
@@ -22,7 +26,6 @@ def get_one(name) -> Explorer:
         raise HTTPException(status_code=404, detail=e.msg)
 
 
-@router.post('', status_code=201)
 @router.post('/', status_code=201)
 def create(explorer: Explorer) -> Explorer:
     try:
@@ -39,13 +42,8 @@ def modify(explorer: Explorer) -> Explorer:
         raise HTTPException(status_code=404, detail=e.msg)
 
 
-@router.put('/')
-def replace(explorer: Explorer) -> Explorer:
-    return service.replace(explorer)
-
-
 @router.delete('/{name}', status_code=204)
-def delete(name: str):
+def delete(name: str) -> None:
     try:
         return service.delete(name)
     except Missing as e:

@@ -41,7 +41,7 @@ def modify(name: str, creature: Creature) -> Creature:
         raise HTTPException(status_code=404, detail=e.msg)
 
 
-@router.delete('/{name}')
+@router.delete('/{name}', status_code=204)
 def delete(name: str) -> None:
     try:
         return service.delete(name)
