@@ -26,4 +26,14 @@ def test_create(sample):
 
 def test_create_dupplicate():
     with pytest.raises(Duplicate):
-        resp = data.create(sample)
+        _ = data.create(sample)
+
+
+def test_get_exists(sample):
+    resp = data.get_one(sample.name)
+    assert resp == sample
+
+
+def test_get_missing():
+    with pytest.raises(Missing):
+        _ = data.get_one('boxturtle')
