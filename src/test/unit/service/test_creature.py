@@ -37,3 +37,15 @@ def test_get_exists(sample):
 def test_get_missing():
     with pytest.raises(Missing):
         _ = data.get_one('boxturtle')
+
+
+def test_modify(sample):
+    sample.country = 'CA'
+    resp = data.modify(sample.name, sample)
+    assert resp == sample
+
+
+def test_modify_missing():
+    bob: Creature = Creature(name='bob', country='US', area='*', description='desc', aka='??')
+    with pytest.raises(Missing):
+        _ = data.modify(bob.name, bob)
