@@ -11,10 +11,10 @@ from errors import Missing, Duplicate
 def sample() -> Creature:
     return Creature(
         name='Yeti',
+        aka='Abominable Snowman',
         country='CN',
         area='Himalayas',
         description='Hirsute Himalayan',
-        aka='Abominable Snowman',
     )
 
 
