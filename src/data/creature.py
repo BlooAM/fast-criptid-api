@@ -14,7 +14,7 @@ curs.execute("""
 
 
 def row_to_model(row: tuple) -> Creature:
-    name, description, country, area, aka = row
+    name, description, area, country, aka = row
     return Creature(name=name, country=country, description=description, area=area, aka=aka)
 
 
@@ -45,8 +45,8 @@ def create(creature: Creature) -> Creature:
         return None
 
     query = """
-        insert into creature (name, country, description, area, aka) 
-        values (:name, :country, :description, :area, :aka)
+        insert into creature (name, description, area, country, aka) 
+        values (:name, :description, :area, :country, :aka)
     """
     params = model_to_dict(creature)
     try:

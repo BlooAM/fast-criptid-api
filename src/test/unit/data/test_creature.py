@@ -12,8 +12,8 @@ from data import creature
 def sample() -> Creature:
     return Creature(
         name="yeti",
-        country="CN",
         description="Hirsute Himalayan",
+        country="CN",
         area="Himalayas",
         aka="Abominable Snowman",
     )
@@ -29,7 +29,7 @@ def test_create_duplicate(sample):
         _ = creature.create(sample)
 
 
-def test_get_exists(sample):
+def test_get_one(sample):
     resp = creature.get_one(sample.name)
     assert resp == sample
 
