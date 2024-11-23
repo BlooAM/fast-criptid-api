@@ -28,6 +28,7 @@ def create(creature: Creature) -> Creature:
 def modify(name: str, creature: Creature) -> Creature:
     if creature not in _creatures:
         raise Missing(msg=f'Creature {name} not found')
+    creature.name = name
     return creature
 
 

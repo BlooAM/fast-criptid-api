@@ -24,7 +24,7 @@ def test_create(sample):
     assert resp == sample
 
 
-def test_create_dupplicate():
+def test_create_dupplicate(sample):
     with pytest.raises(Duplicate):
         _ = data.create(sample)
 
@@ -40,8 +40,9 @@ def test_get_missing():
 
 
 def test_modify(sample):
-    sample.country = 'CA'
-    resp = data.modify(sample.name, sample)
+    name = 'CA'
+    resp = data.modify(name, sample)
+    sample.name = name
     assert resp == sample
 
 
